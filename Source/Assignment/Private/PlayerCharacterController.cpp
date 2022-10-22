@@ -15,6 +15,10 @@ void APlayerCharacterController::BeginPlay()
 	Super::BeginPlay();
 
 	mStartWidget = CreateWidget<UCreateNickNameWidget>(this, mStartWidgetClass);
+	mHUDWidget = CreateWidget<UHUDWidget>(this, mHUDWidgetClass);
+	mShopWidget = CreateWidget<UShopWidget>(this, mShopWidgetClass);
+	mInvenWidget = CreateWidget<UInvenWidget>(this, mInvenWidgetClass);
+
 	mStartWidget->AddToViewport();
 
 	bShowMouseCursor = true;
@@ -22,21 +26,21 @@ void APlayerCharacterController::BeginPlay()
 
 	mState = Cast<APlayerCharacterState>(PlayerState);
 
-	mHUDWidget = CreateWidget<UHUDWidget>(this, mHUDWidgetClass);
 	mHUDWidget->AddToViewport();
 	mHUDWidget->SetVisibility(ESlateVisibility::Hidden);
-
-	mShopWidget = CreateWidget<UShopWidget>(this, mShopWidgetClass);
+	
 	mShopWidget->AddToViewport();
 	mShopWidget->SetVisibility(ESlateVisibility::Hidden);
-
-	mInvenWidget = CreateWidget<UInvenWidget>(this, mInvenWidgetClass);
+	
 	mInvenWidget ->AddToViewport();
 	mInvenWidget ->SetVisibility(ESlateVisibility::Hidden);
+
+	SetPause(true);
 }
 
 void APlayerCharacterController::ChangeHUD()
 {
+	SetPause(false);
 	mStartWidget->RemoveFromViewport();
 	mHUDWidget->SetVisibility(ESlateVisibility::Visible);
 	mHUDWidget->UpdateName(mState->GetPlayerName());

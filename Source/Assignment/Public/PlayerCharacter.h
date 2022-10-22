@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
-class ASSIGNMENT_API APlayerCharacter : public ACharacter
+class ASSIGNMENT_API APlayerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
@@ -26,6 +26,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual float TakeDamage(float damageAmount, const struct FDamageEvent& damageEvent, class AController* eventInstigator, AActor* damageCauser) override;
 
 private:
 	UPROPERTY(VisibleAnywhere, category = "Camera")
@@ -42,13 +43,12 @@ private:
 	void OpenShop();
 	void OpenInven();
 
+	void AttackCheck();
+
 	FVector mDirection;
 
 	class APlayerCharacterController* mController;
 	class APlayerCharacterState* mState;
 
 	class AWeapon* mCurWeapon;
-
-	UPROPERTY(EditAnywhere, category = "Weapon")
-		TSubclassOf<class AWeapon> defaultWeaponClass;
 };

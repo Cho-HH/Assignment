@@ -10,6 +10,7 @@
 #include "Weapon.h"
 #include "InvenWidget.h"
 #include "HUDWidget.h"
+#include "MyAnimInstance.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -38,6 +39,8 @@ void APlayerCharacter::BeginPlay()
 
 	mState->SetAttack(mCurWeapon->GetWeaponAttack());
 	mController->GetHUDWidget()->UpdateAttack(mState->GetAttack());
+
+	animInstance->OnAttackHitCheck.AddUObject(this, &APlayerCharacter::AttackCheck);
 }
 
 void APlayerCharacter::ChangeWeapon(UClass* weaponClass)
@@ -74,6 +77,13 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAction(TEXT("OpenShop"), EInputEvent::IE_Pressed, this, &APlayerCharacter::OpenShop);
 	PlayerInputComponent->BindAction(TEXT("OpenInven"), EInputEvent::IE_Pressed, this, &APlayerCharacter::OpenInven);
+	PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Attack);
+}
+
+float APlayerCharacter::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
+{
+	float damage = Super::TakeDamage(damageAmount, damageEvent, eventInstigator, damageCauser);
+	return damage;
 }
 
 void APlayerCharacter::MoveForward(float axis)
@@ -94,5 +104,17 @@ void APlayerCharacter::OpenShop()
 void APlayerCharacter::OpenInven()
 {
 	mController->OpenInven();
+}
+
+void APlayerCharacter::AttackCheck()
+{
+	FHitResult hitResult;
+	bool result = ABaseCharacter::AttackCheck(hitResult);
+
+	if (result)
+	{
+		FDamageEvent damageEvent;
+		hitResult.GetActor()->TakeDamage(mState->GetAttack(), damageEvent, mController, this);
+	}
 }
 
