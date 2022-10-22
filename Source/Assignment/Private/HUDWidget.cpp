@@ -37,6 +37,11 @@ void UHUDWidget::UpdateName(const FString& name)
 	NickNameText->SetText(FText::FromString(name));
 }
 
+void UHUDWidget::UpdateAttack(int32 attack)
+{
+	AttackText->SetText(FText::FromString(FString::FromInt(attack)));
+}
+
 void UHUDWidget::ShopBtnClicked()
 {
 	mController->OpenShop();

@@ -6,12 +6,17 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "PlayerCharacterController.h"
+#include "PlayerCharacterState.h"
+#include "Weapon.h"
+#include "InvenWidget.h"
+#include "HUDWidget.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 	: mSpringArm(CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm")))
 	, mCamera(CreateDefaultSubobject<UCameraComponent>(TEXT("Camera")))
 	, mDirection(FVector::ZeroVector)
+	, mWeapon(CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon")))
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -25,6 +30,27 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	mController = Cast<APlayerCharacterController>(GetController());
+	mState = Cast<APlayerCharacterState>(mController->PlayerState);
+
+	AWeapon* weapon = Cast<AWeapon>(GetWorld()->SpawnActor<AWeapon>(defaultWeaponClass, FVector::ZeroVector, FRotator::ZeroRotator));
+	weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hand_rSocket"));
+	mCurWeapon = weapon;
+
+	mState->SetAttack(mCurWeapon->GetWeaponAttack());
+	mController->GetHUDWidget()->UpdateAttack(mState->GetAttack());
+}
+
+void APlayerCharacter::ChangeWeapon(UClass* weaponClass)
+{
+	mController->GetInvenWidget()->AddInven(mCurWeapon);
+	mCurWeapon->Destroy();
+	
+	AWeapon* weapon = Cast<AWeapon>(GetWorld()->SpawnActor<AWeapon>(weaponClass, FVector::ZeroVector, FRotator::ZeroRotator));
+	weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hand_rSocket"));
+	mCurWeapon = weapon;
+
+	mState->SetAttack(mCurWeapon->GetWeaponAttack());
+	mController->GetHUDWidget()->UpdateAttack(mState->GetAttack());
 }
 
 // Called every frame

@@ -48,6 +48,14 @@ void UInvenWidget::SellBtnClicked()
 
 void UInvenWidget::EquipBtnClicked()
 {
+	if (mSlots[mSelectedSlotIndex]->GetWeapon() == nullptr)
+	{
+		return;
+	}
+
+	mController->ChangeWeapon(mSelectedWeapon->GetClass());
+	mSlots[mSelectedSlotIndex]->SetSlot(nullptr);
+	SetWeaponText(TEXT(""), 0, 0);
 	UpdateWidgetImage();
 }
 
@@ -86,5 +94,6 @@ bool UInvenWidget::AddInven(AWeapon* weapon)
 		}
 	}
 
+	UpdateWidgetImage();
 	return false;
 }

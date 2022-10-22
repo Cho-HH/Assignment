@@ -14,6 +14,7 @@ class ASSIGNMENT_API APlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
+	void ChangeWeapon(UClass* weaponClass);
 
 protected:
 	// Called when the game starts or when spawned
@@ -33,6 +34,9 @@ private:
 	UPROPERTY(VisibleAnywhere, category = "Camera")
 		class UCameraComponent* mCamera;
 
+	UPROPERTY(VisibleAnywhere, category = "Weapon")
+		USkeletalMeshComponent* mWeapon;
+
 	void MoveForward(float axis);
 	void MoveRight(float axis);
 	void OpenShop();
@@ -41,4 +45,10 @@ private:
 	FVector mDirection;
 
 	class APlayerCharacterController* mController;
+	class APlayerCharacterState* mState;
+
+	class AWeapon* mCurWeapon;
+
+	UPROPERTY(EditAnywhere, category = "Weapon")
+		TSubclassOf<class AWeapon> defaultWeaponClass;
 };

@@ -8,6 +8,7 @@
 #include "InvenWidget.h"
 #include "ShopWidget.h"
 #include "Weapon.h"
+#include "PlayerCharacter.h"
 
 void APlayerCharacterController::BeginPlay()
 {
@@ -21,9 +22,14 @@ void APlayerCharacterController::BeginPlay()
 
 	mState = Cast<APlayerCharacterState>(PlayerState);
 
+	mHUDWidget = CreateWidget<UHUDWidget>(this, mHUDWidgetClass);
+	mHUDWidget->AddToViewport();
+	mHUDWidget->SetVisibility(ESlateVisibility::Hidden);
+
 	mShopWidget = CreateWidget<UShopWidget>(this, mShopWidgetClass);
 	mShopWidget->AddToViewport();
 	mShopWidget->SetVisibility(ESlateVisibility::Hidden);
+
 	mInvenWidget = CreateWidget<UInvenWidget>(this, mInvenWidgetClass);
 	mInvenWidget ->AddToViewport();
 	mInvenWidget ->SetVisibility(ESlateVisibility::Hidden);
@@ -32,8 +38,7 @@ void APlayerCharacterController::BeginPlay()
 void APlayerCharacterController::ChangeHUD()
 {
 	mStartWidget->RemoveFromViewport();
-	mHUDWidget = CreateWidget<UHUDWidget>(this, mHUDWidgetClass);
-	mHUDWidget->AddToViewport();
+	mHUDWidget->SetVisibility(ESlateVisibility::Visible);
 	mHUDWidget->UpdateName(mState->GetPlayerName());
 	mHUDWidget->UpdateHPBar();
 	GetPawn()->EnableInput(this);
@@ -77,7 +82,18 @@ UInvenWidget* APlayerCharacterController::GetInvenWidget() const
 	return mInvenWidget;
 }
 
+UHUDWidget* APlayerCharacterController::GetHUDWidget() const
+{
+	return mHUDWidget;
+}
+
 bool APlayerCharacterController::AddInven(AWeapon* weapon)
 {
 	return mInvenWidget->AddInven(weapon);
+}
+
+void APlayerCharacterController::ChangeWeapon(UClass* changeWeaponClass)
+{
+	APlayerCharacter* player = Cast<APlayerCharacter>(GetPawn());
+	player->ChangeWeapon(changeWeaponClass);
 }

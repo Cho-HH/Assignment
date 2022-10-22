@@ -17,9 +17,7 @@ class ASSIGNMENT_API UInvenWidget : public UInvenAndShopWidget
 public:	
 	void UpdateWidgetImage();
 	bool AddInven(class AWeapon* weapon);
-
 	void SelectWeapon(class AWeapon* weapon, int32 slotIndex);
-
 	void SetWeaponText(FString name, int32 attack, int32 sellPrice);
 
 protected:
@@ -62,4 +60,5 @@ private:
 	TArray<class UInvenSlotWidget*> mSlots;
 
 	int32 mSelectedSlotIndex;
+
 };

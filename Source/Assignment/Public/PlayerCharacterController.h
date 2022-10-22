@@ -23,7 +23,11 @@ public:
 
 	class UShopWidget* GetShopWidget() const;
 	class UInvenWidget* GetInvenWidget() const;
+	class UHUDWidget* GetHUDWidget() const;
+
 	bool AddInven(class AWeapon* weapon);
+
+	void ChangeWeapon(UClass* changeWeaponClass);
 
 protected:
 	virtual void BeginPlay() override;

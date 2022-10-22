@@ -25,11 +25,16 @@ public:
 	int32 GetCurHP() const;
 	int32 SetCurHP(int32 hp);
 
+	int32 GetAttack() const;
+	void SetAttack(int32 attack);
+
 private:
 	int32 mCurMoney;
 
 	int32 mMaxHP;
 	int32 mCurHP;
+
+	int32 mCurAttack;
 
 	TArray<class AActor> mInventory;
 };

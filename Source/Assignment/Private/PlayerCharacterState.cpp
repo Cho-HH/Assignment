@@ -7,6 +7,7 @@ APlayerCharacterState::APlayerCharacterState()
 	: mCurMoney(7000)
 	, mMaxHP(500)
 	, mCurHP(500)
+	, mCurAttack(0)
 {
 }
 
@@ -38,4 +39,14 @@ int32 APlayerCharacterState::GetCurHP() const
 int32 APlayerCharacterState::SetCurHP(int32 hp)
 {
 	return mCurHP -= hp;
+}
+
+int32 APlayerCharacterState::GetAttack() const
+{
+	return mCurAttack;
+}
+
+void APlayerCharacterState::SetAttack(int32 attack)
+{
+	mCurAttack = attack;
 }

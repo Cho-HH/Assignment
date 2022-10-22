@@ -38,4 +38,3 @@ int32 AWeapon::GetWeaponSell() const
 {
 	return mSellPrice;
 }
-

@@ -17,7 +17,8 @@ class ASSIGNMENT_API UHUDWidget : public UUserWidget
 public:
 	void UpdateHPBar();
 	void UpdateName(const FString& name);
-	
+	void UpdateAttack(int32 attack);
+
 protected:
 	virtual void NativeConstruct() override;
 
@@ -36,6 +37,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 		class UTextBlock* HPPercent;
+
+	UPROPERTY(meta = (BindWidget))
+		class UTextBlock* AttackText;
 
 	UFUNCTION()
 		void ShopBtnClicked();
