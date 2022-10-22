@@ -32,6 +32,7 @@ void AEnemy::BeginPlay()
 	mHPBar = Cast<UHPWidget>(mHPWidget->GetUserWidgetObject());
 
 	animInstance->OnAttackHitCheck.AddUObject(this, &AEnemy::AttackCheck);
+	animInstance->OnMontageEnded.AddDynamic(this, &AEnemy::OnAttackMontageEnded);
 }
 
 float AEnemy::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
@@ -59,6 +60,11 @@ void AEnemy::AttackCheck()
 		FDamageEvent damageEvent;
 		hitResult.GetActor()->TakeDamage(mAttack, damageEvent, GetController(), this);
 	}
+}
+
+void AEnemy::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	OnAttackEnd.Broadcast();
 }
 
 

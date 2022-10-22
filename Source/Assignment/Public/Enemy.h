@@ -6,6 +6,8 @@
 #include "BaseCharacter.h"
 #include "Enemy.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEndDelegate);
+
 UCLASS()
 class ASSIGNMENT_API AEnemy : public ABaseCharacter
 {
@@ -14,6 +16,7 @@ class ASSIGNMENT_API AEnemy : public ABaseCharacter
 public:
 	// Sets default values for this character's properties
 	AEnemy();
+	FOnAttackEndDelegate OnAttackEnd;
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,4 +41,7 @@ private:
 	class UHPWidget* mHPBar;
 
 	void AttackCheck();
+
+	UFUNCTION()
+		void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 };

@@ -14,6 +14,7 @@ class ASSIGNMENT_API ABaseCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
+	void Attack();
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,8 +30,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, category = "Weapon")
 		TSubclassOf<class AWeapon> defaultWeaponClass;
-
-	void Attack();
 
 	bool AttackCheck(FHitResult& hitResult);
 };

@@ -28,7 +28,7 @@ void UHUDWidget::NativeConstruct()
 
 void UHUDWidget::UpdateHPBar()
 {
-	HPBar->SetPercent(mState->GetCurHP() / mState->GetMaxHP());
+	HPBar->SetPercent(static_cast<float>(mState->GetCurHP()) / static_cast<float>(mState->GetMaxHP()));
 	HPPercent->SetText(FText::FromString(FString::Printf(TEXT("%d / %d"), mState->GetCurHP(), mState->GetMaxHP())));
 }
 

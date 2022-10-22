@@ -48,4 +48,3 @@ bool ABaseCharacter::AttackCheck(FHitResult& hitResult)
 
 	return result;
 }
-

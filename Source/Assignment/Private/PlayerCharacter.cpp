@@ -83,6 +83,16 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 float APlayerCharacter::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
 {
 	float damage = Super::TakeDamage(damageAmount, damageEvent, eventInstigator, damageCauser);
+	mState->SetCurHP(mState->GetCurHP() - damage);
+	if (mState->GetCurHP() <= 0)
+	{
+		animInstance->SetDeadAnim();
+		SetActorEnableCollision(false);
+		SetActorTickEnabled(false);
+	}
+	UHUDWidget* hud = mController->GetHUDWidget();
+	hud->UpdateHPBar();
+
 	return damage;
 }
 

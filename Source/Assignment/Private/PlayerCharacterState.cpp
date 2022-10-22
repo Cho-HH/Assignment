@@ -38,7 +38,7 @@ int32 APlayerCharacterState::GetCurHP() const
 
 int32 APlayerCharacterState::SetCurHP(int32 hp)
 {
-	return mCurHP -= hp;
+	return mCurHP = hp;
 }
 
 int32 APlayerCharacterState::GetAttack() const
