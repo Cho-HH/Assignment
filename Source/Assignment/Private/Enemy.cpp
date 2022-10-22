@@ -38,6 +38,11 @@ void AEnemy::BeginPlay()
 float AEnemy::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
 {
 	float damage = Super::TakeDamage(damageAmount, damageEvent, eventInstigator, damageCauser);
+	if (eventInstigator->GetClass() == GetController()->GetClass())
+	{
+		return damage;
+	}
+
 	mCurHP -= damage;
 	mHPBar->SetHPPercent(static_cast<float>(mCurHP) / static_cast<float>(mMaxHP));
 	if (mCurHP <= 0)
@@ -67,4 +72,7 @@ void AEnemy::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 	OnAttackEnd.Broadcast();
 }
 
-
+bool AEnemy::IsAlive() const
+{
+	return mCurHP > 0;
+}
