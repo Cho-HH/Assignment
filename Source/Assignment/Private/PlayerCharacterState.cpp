@@ -22,7 +22,7 @@ int32 APlayerCharacterState::GetCurMoney() const
 
 void APlayerCharacterState::SetMoney(int32 money)
 {
-	mCurMoney += money;
+	mCurMoney = money;
 }
 
 int32 APlayerCharacterState::GetMaxHP() const

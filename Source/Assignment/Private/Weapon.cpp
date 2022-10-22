@@ -34,3 +34,8 @@ int32 AWeapon::GetWeaponAttack() const
 	return mAttack;
 }
 
+int32 AWeapon::GetWeaponSell() const
+{
+	return mSellPrice;
+}
+

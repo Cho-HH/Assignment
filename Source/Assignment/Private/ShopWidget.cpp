@@ -85,7 +85,7 @@ void UShopWidget::BuyBtnClicked()
 
 	if (mController->AddInven(mSelectedWeapon))
 	{
-		mState->SetMoney(-(mSelectedWeapon->GetWeaponPrice()));
+		mState->SetMoney(mState->GetCurMoney() - mSelectedWeapon->GetWeaponPrice());
 		UpdateCurMoney();
 	}
 }

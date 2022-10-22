@@ -16,6 +16,9 @@ class ASSIGNMENT_API UInvenSlotWidget : public USlotWidget
 	
 public:
 	void SetSlot(class AWeapon* weapon);
+	class AWeapon* GetWeapon() const;
+
+	int32 GetSlotIndex() const;
 
 protected:
 	virtual void NativeConstruct() override;
@@ -26,5 +29,7 @@ private:
 	UFUNCTION()
 	virtual void SlotBtnClicked();
 
+	UPROPERTY(EditAnywhere, category = "UI")
+	int32 mSlotIndex;
 	
 };

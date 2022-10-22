@@ -26,13 +26,38 @@ void UInvenWidget::NativeConstruct()
 		EquipBtn->OnClicked.AddDynamic(this, &UInvenWidget::EquipBtnClicked);
 	}
 
+	if (SellBtn != nullptr)
+	{
+		SellBtn->OnClicked.AddDynamic(this, &UInvenWidget::SellBtnClicked);
+	}
+
 	UpdateCurMoney();
+
+	mSlots.Add(Slot_1);
+	mSlots.Add(Slot_2);
+	mSlots.Add(Slot_3);
+	mSlots.Add(Slot_4);
+	mSlots.Add(Slot_5);
+	mSlots.Add(Slot_6);
 }
 
 void UInvenWidget::BakcBtnClicked()
 {
 	APlayerCharacterController* controller = Cast<APlayerCharacterController>(UGameplayStatics::GetPlayerController(this, 0));
 	controller->closeWidget(this);
+}
+
+void UInvenWidget::SellBtnClicked()
+{
+	if (mSlots[mSelectedSlotIndex]->GetWeapon() == nullptr)
+	{
+		return;
+	}
+
+	mState->SetMoney(mState->GetCurMoney() + mSlots[mSelectedSlotIndex]->GetWeapon()->GetWeaponSell());
+	mSlots[mSelectedSlotIndex]->SetSlot(nullptr);
+	UpdateCurMoney();
+	UpdateWidgetImage();
 }
 
 void UInvenWidget::EquipBtnClicked()
@@ -64,52 +89,39 @@ void UInvenWidget::SetWeaponAttackText(int32 attack)
 	}
 }
 
-void UInvenWidget::SelectWeapon(AWeapon* weapon)
+void UInvenWidget::SetWeaponSellText(int32 sellPrice)
+{
+	if (WeaponSell != nullptr)
+	{
+		WeaponSell->SetText(FText::FromString(FString::FromInt(sellPrice)));
+	}
+}
+
+void UInvenWidget::SelectWeapon(AWeapon* weapon, int32 slotIndex)
 {
 	mSelectedWeapon = weapon;
+	mSelectedSlotIndex = slotIndex;
 }
 
 void UInvenWidget::UpdateWidgetImage()
 {
-	Slot_1->UpdateWidgetIcon();
-	Slot_2->UpdateWidgetIcon();
-	Slot_3->UpdateWidgetIcon();
-	Slot_4->UpdateWidgetIcon();
-	Slot_5->UpdateWidgetIcon();
-	Slot_6->UpdateWidgetIcon();
+	for (int i = 0; i < mSlots.Num(); i++)
+	{
+		mSlots[i]->UpdateWidgetIcon();
+	}
 }
 
 bool UInvenWidget::AddInven(AWeapon* weapon)
 {
-	if (mCurAddIndex >= 6)
+	for (int i = 0; i < mSlots.Num(); i++)
 	{
-		return false;
+		if (mSlots[i]->GetWeapon() == nullptr)
+		{
+			mSlots[i]->SetSlot(weapon);
+			return true;
+			break;
+		}
 	}
 
-	switch (mCurAddIndex)
-	{
-	case 0:
-		Slot_1->SetSlot(weapon);
-		break;
-	case 1:
-		Slot_2->SetSlot(weapon);
-		break;
-	case 2:
-		Slot_3->SetSlot(weapon);
-		break;
-	case 3:
-		Slot_4->SetSlot(weapon);
-		break;
-	case 4:
-		Slot_5->SetSlot(weapon);
-		break;
-	case 5:
-		Slot_6->SetSlot(weapon);
-		break;
-	default:
-		break;
-	}
-	mCurAddIndex++;
-
-	return true;
+	return false;
 }

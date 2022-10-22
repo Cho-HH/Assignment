@@ -17,6 +17,7 @@ public:
 	FName GetWeaponName() const;
 	int32 GetWeaponPrice() const;
 	int32 GetWeaponAttack() const;
+	int32 GetWeaponSell() const;
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,4 +35,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		int32 mAttack;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		int32 mSellPrice;
 };

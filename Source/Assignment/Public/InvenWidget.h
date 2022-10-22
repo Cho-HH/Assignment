@@ -19,8 +19,10 @@ public:
 
 	void SetWeaponNameText(FText name);
 	void SetWeaponAttackText(int32 attack);
-	void SelectWeapon(class AWeapon* weapon);
+	void SetWeaponSellText(int32 sellPrice);
 
+	void SelectWeapon(class AWeapon* weapon, int32 slotIndex);
+	
 	void UpdateWidgetImage();
 	bool AddInven(class AWeapon* weapon);
 
@@ -44,7 +46,16 @@ private:
 		class UTextBlock* WeaponAttack;
 
 	UPROPERTY(meta = (BindWidget))
+		class UTextBlock* WeaponSell;
+
+	UPROPERTY(meta = (BindWidget))
 		class UButton* EquipBtn;
+
+	UPROPERTY(meta = (BindWidget))
+		class UButton* SellBtn;
+
+	UFUNCTION()
+		void SellBtnClicked();
 
 	UPROPERTY(meta = (BindWidget))
 		class UInvenSlotWidget* Slot_1;
@@ -72,5 +83,7 @@ private:
 
 	class AWeapon* mSelectedWeapon;
 
-	int32 mCurAddIndex;
+	TArray<class UInvenSlotWidget*> mSlots;
+
+	int32 mSelectedSlotIndex;
 };

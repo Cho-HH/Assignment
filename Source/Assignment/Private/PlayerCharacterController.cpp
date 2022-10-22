@@ -44,6 +44,7 @@ void APlayerCharacterController::OpenShop()
 	SetPause(true);
 	mHUDWidget->SetVisibility(ESlateVisibility::Hidden);
 	mShopWidget->SetVisibility(ESlateVisibility::Visible);
+	mShopWidget->UpdateCurMoney();
 }
 
 void APlayerCharacterController::OpenInven()

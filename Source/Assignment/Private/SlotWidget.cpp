@@ -21,4 +21,8 @@ void USlotWidget::UpdateWidgetIcon()
 			mWeapon = NewObject<AWeapon>(this, mWeaponClass);
 		}
 	}
+	else
+	{
+		WeaponImg->SetBrushFromTexture(nullptr);
+	}
 }

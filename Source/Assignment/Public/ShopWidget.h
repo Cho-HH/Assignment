@@ -15,6 +15,8 @@ class ASSIGNMENT_API UShopWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	void UpdateCurMoney();
+
 	void SetWeaponNameText(FText name);
 	void SetWeaponPriceText(int32 price);
 	void SetWeaponAttackText(int32 attack);
@@ -25,7 +27,6 @@ protected:
 	virtual void NativeConstruct() override;
 
 private:
-	void UpdateCurMoney();
 
 	UPROPERTY(meta = (BindWidget))
 		class UButton* BackBtn;

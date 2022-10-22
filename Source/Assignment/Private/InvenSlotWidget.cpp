@@ -31,13 +31,15 @@ void UInvenSlotWidget::SlotBtnClicked()
 	{
 		mInvenWidget->SetWeaponNameText(FText::FromString(FString::Printf(TEXT(""))));
 		mInvenWidget->SetWeaponAttackText(0);
-		mInvenWidget->SelectWeapon(nullptr);
+		mInvenWidget->SelectWeapon(nullptr, mSlotIndex);
+		mInvenWidget->SetWeaponSellText(0);
 	}
 	else
 	{
 		mInvenWidget->SetWeaponNameText(FText::FromName(mWeapon->GetWeaponName()));
 		mInvenWidget->SetWeaponAttackText(mWeapon->GetWeaponAttack());	
-		mInvenWidget->SelectWeapon(mWeapon);
+		mInvenWidget->SelectWeapon(mWeapon, mSlotIndex);
+		mInvenWidget->SetWeaponSellText(mWeapon->GetWeaponSell());
 	}
 }
 
@@ -49,5 +51,15 @@ void UInvenSlotWidget::SetSlot(AWeapon* weapon)
 		mInvenWidget = controller->GetInvenWidget();
 	}
 	mWeapon = weapon;
-	mWeaponClass = mWeapon->GetClass();
+	mWeapon == nullptr ? mWeaponClass = nullptr : mWeaponClass = mWeapon->GetClass();	
+}
+
+class AWeapon* UInvenSlotWidget::GetWeapon() const
+{
+	return mWeapon;
+}
+
+int32 UInvenSlotWidget::GetSlotIndex() const
+{
+	return mSlotIndex;
 }
