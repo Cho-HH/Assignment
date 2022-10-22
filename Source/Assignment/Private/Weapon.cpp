@@ -19,7 +19,7 @@ void AWeapon::BeginPlay()
 	Super::BeginPlay();
 }
 
-FName AWeapon::GetWeaponName() const
+FString AWeapon::GetWeaponName() const
 {
 	return mName;
 }

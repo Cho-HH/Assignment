@@ -14,7 +14,7 @@ class ASSIGNMENT_API AWeapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AWeapon();
-	FName GetWeaponName() const;
+	FString GetWeaponName() const;
 	int32 GetWeaponPrice() const;
 	int32 GetWeaponAttack() const;
 	int32 GetWeaponSell() const;
@@ -28,7 +28,7 @@ private:
 		USkeletalMeshComponent* mMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		FName mName;
+		FString mName;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		int32 mPrice;

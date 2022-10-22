@@ -25,16 +25,12 @@ void UShopSlotWidget::SlotBtnClicked()
 {
 	if (mWeapon == nullptr)
 	{
-		mShopWidget->SetWeaponNameText(FText::FromString(FString::Printf(TEXT(""))));
-		mShopWidget->SetWeaponAttackText(0);
-		mShopWidget->SetWeaponPriceText(0);
+		mShopWidget->SetWeaponText(TEXT(""), 0, 0);		
 		mShopWidget->SelectWeapon(nullptr);
 	}
 	else
 	{
-		mShopWidget->SetWeaponNameText(FText::FromName(mWeapon->GetWeaponName()));
-		mShopWidget->SetWeaponAttackText(mWeapon->GetWeaponAttack());
-		mShopWidget->SetWeaponPriceText(mWeapon->GetWeaponPrice());
+		mShopWidget->SetWeaponText(mWeapon->GetWeaponName(), mWeapon->GetWeaponAttack(), mWeapon->GetWeaponPrice());
 		mShopWidget->SelectWeapon(mWeapon);
 	}
 }

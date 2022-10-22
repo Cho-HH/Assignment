@@ -12,14 +12,7 @@
 
 void UInvenWidget::NativeConstruct()
 {
-	Super::NativeConstruct();
-	mController = Cast<APlayerCharacterController>(UGameplayStatics::GetPlayerController(this, 0));
-	mState = Cast<APlayerCharacterState>(mController->PlayerState);
-
-	if (BackBtn != nullptr)
-	{
-		BackBtn->OnClicked.AddDynamic(this, &UInvenWidget::BakcBtnClicked);
-	}
+	UInvenAndShopWidget::NativeConstruct();
 
 	if (EquipBtn != nullptr)
 	{
@@ -31,20 +24,12 @@ void UInvenWidget::NativeConstruct()
 		SellBtn->OnClicked.AddDynamic(this, &UInvenWidget::SellBtnClicked);
 	}
 
-	UpdateCurMoney();
-
 	mSlots.Add(Slot_1);
 	mSlots.Add(Slot_2);
 	mSlots.Add(Slot_3);
 	mSlots.Add(Slot_4);
 	mSlots.Add(Slot_5);
 	mSlots.Add(Slot_6);
-}
-
-void UInvenWidget::BakcBtnClicked()
-{
-	APlayerCharacterController* controller = Cast<APlayerCharacterController>(UGameplayStatics::GetPlayerController(this, 0));
-	controller->closeWidget(this);
 }
 
 void UInvenWidget::SellBtnClicked()
@@ -56,6 +41,7 @@ void UInvenWidget::SellBtnClicked()
 
 	mState->SetMoney(mState->GetCurMoney() + mSlots[mSelectedSlotIndex]->GetWeapon()->GetWeaponSell());
 	mSlots[mSelectedSlotIndex]->SetSlot(nullptr);
+	SetWeaponText(TEXT(""), 0, 0);
 	UpdateCurMoney();
 	UpdateWidgetImage();
 }
@@ -65,42 +51,19 @@ void UInvenWidget::EquipBtnClicked()
 	UpdateWidgetImage();
 }
 
-void UInvenWidget::UpdateCurMoney()
-{
-	if (CurMoneyText != nullptr)
-	{
-		CurMoneyText->SetText(FText::FromString(FString::FromInt(mState->GetCurMoney())));
-	}
-}
-
-void UInvenWidget::SetWeaponNameText(FText name)
-{
-	if (WeaponName != nullptr)
-	{
-		WeaponName->SetText(name);
-	}
-}
-
-void UInvenWidget::SetWeaponAttackText(int32 attack)
-{
-	if (WeaponAttack != nullptr)
-	{
-		WeaponAttack->SetText(FText::FromString(FString::FromInt(attack)));
-	}
-}
-
-void UInvenWidget::SetWeaponSellText(int32 sellPrice)
-{
-	if (WeaponSell != nullptr)
-	{
-		WeaponSell->SetText(FText::FromString(FString::FromInt(sellPrice)));
-	}
-}
-
 void UInvenWidget::SelectWeapon(AWeapon* weapon, int32 slotIndex)
 {
 	mSelectedWeapon = weapon;
 	mSelectedSlotIndex = slotIndex;
+}
+
+void UInvenWidget::SetWeaponText(FString name, int32 attack, int32 sellPrice)
+{
+	UInvenAndShopWidget::SetWeaponText(name, attack);
+	if (WeaponSell != nullptr)
+	{
+		WeaponSell->SetText(FText::FromString(FString::FromInt(sellPrice)));
+	}
 }
 
 void UInvenWidget::UpdateWidgetImage()

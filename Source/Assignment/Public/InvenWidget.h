@@ -3,59 +3,43 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "InvenAndShopWidget.h"
 #include "InvenWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ASSIGNMENT_API UInvenWidget : public UUserWidget
+class ASSIGNMENT_API UInvenWidget : public UInvenAndShopWidget
 {
 	GENERATED_BODY()
 	
-public:
-	void UpdateCurMoney();
-
-	void SetWeaponNameText(FText name);
-	void SetWeaponAttackText(int32 attack);
-	void SetWeaponSellText(int32 sellPrice);
-
-	void SelectWeapon(class AWeapon* weapon, int32 slotIndex);
-	
+public:	
 	void UpdateWidgetImage();
 	bool AddInven(class AWeapon* weapon);
+
+	void SelectWeapon(class AWeapon* weapon, int32 slotIndex);
+
+	void SetWeaponText(FString name, int32 attack, int32 sellPrice);
 
 protected:
 	virtual void NativeConstruct() override;
 
 private:
 	UPROPERTY(meta = (BindWidget))
-		class UButton* BackBtn;
+		class UButton* EquipBtn;
 
 	UFUNCTION()
-	void BakcBtnClicked();
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* CurMoneyText;
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* WeaponName;
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* WeaponAttack;
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* WeaponSell;
-
-	UPROPERTY(meta = (BindWidget))
-		class UButton* EquipBtn;
+		void EquipBtnClicked();
 
 	UPROPERTY(meta = (BindWidget))
 		class UButton* SellBtn;
 
 	UFUNCTION()
 		void SellBtnClicked();
+
+	UPROPERTY(meta = (BindWidget))
+		class UTextBlock* WeaponSell;
 
 	UPROPERTY(meta = (BindWidget))
 		class UInvenSlotWidget* Slot_1;
@@ -74,14 +58,6 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 		class UInvenSlotWidget* Slot_6;
-
-	UFUNCTION()
-		void EquipBtnClicked();
-
-	class APlayerCharacterController* mController;
-	class APlayerCharacterState* mState;
-
-	class AWeapon* mSelectedWeapon;
 
 	TArray<class UInvenSlotWidget*> mSlots;
 

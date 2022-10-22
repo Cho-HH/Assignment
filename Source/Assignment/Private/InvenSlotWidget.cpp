@@ -29,17 +29,13 @@ void UInvenSlotWidget::SlotBtnClicked()
 {
 	if (mWeapon == nullptr)
 	{
-		mInvenWidget->SetWeaponNameText(FText::FromString(FString::Printf(TEXT(""))));
-		mInvenWidget->SetWeaponAttackText(0);
+		mInvenWidget->SetWeaponText(TEXT(""), 0, 0);
 		mInvenWidget->SelectWeapon(nullptr, mSlotIndex);
-		mInvenWidget->SetWeaponSellText(0);
 	}
 	else
 	{
-		mInvenWidget->SetWeaponNameText(FText::FromName(mWeapon->GetWeaponName()));
-		mInvenWidget->SetWeaponAttackText(mWeapon->GetWeaponAttack());	
+		mInvenWidget->SetWeaponText(mWeapon->GetWeaponName(), mWeapon->GetWeaponAttack(), mWeapon->GetWeaponSell());
 		mInvenWidget->SelectWeapon(mWeapon, mSlotIndex);
-		mInvenWidget->SetWeaponSellText(mWeapon->GetWeaponSell());
 	}
 }
 

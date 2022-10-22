@@ -3,36 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "InvenAndShopWIdget.h"
 #include "ShopWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ASSIGNMENT_API UShopWidget : public UUserWidget
+class ASSIGNMENT_API UShopWidget : public UInvenAndShopWidget
 {
 	GENERATED_BODY()
 	
 public:
-	void UpdateCurMoney();
-
-	void SetWeaponNameText(FText name);
-	void SetWeaponPriceText(int32 price);
-	void SetWeaponAttackText(int32 attack);
-
 	void SelectWeapon(class AWeapon* weapon);
+
+	void SetWeaponText(FString name, int32 attack, int32 price);
 
 protected:
 	virtual void NativeConstruct() override;
 
 private:
-
-	UPROPERTY(meta = (BindWidget))
-		class UButton* BackBtn;
-
-	UFUNCTION()
-		void BakcBtnClicked();
 
 	UPROPERTY(meta = (BindWidget))
 		class UButton* BuyBtn;
@@ -41,19 +31,7 @@ private:
 		void BuyBtnClicked();
 
 	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* CurMoneyText;
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* WeaponName;
-
-	UPROPERTY(meta = (BindWidget))
 		class UTextBlock* WeaponPrice;
-
-	UPROPERTY(meta = (BindWidget))
-		class UTextBlock* WeaponAttack;
-
-	class APlayerCharacterController* mController;
-	class APlayerCharacterState* mState;
 
 	class AWeapon* mSelectedWeapon;
 };

@@ -45,6 +45,7 @@ void APlayerCharacterController::OpenShop()
 	mHUDWidget->SetVisibility(ESlateVisibility::Hidden);
 	mShopWidget->SetVisibility(ESlateVisibility::Visible);
 	mShopWidget->UpdateCurMoney();
+	mShopWidget->SetWeaponText(TEXT(""), 0, 0);
 }
 
 void APlayerCharacterController::OpenInven()
@@ -54,6 +55,7 @@ void APlayerCharacterController::OpenInven()
 	mInvenWidget->SetVisibility(ESlateVisibility::Visible);
 	mInvenWidget->UpdateWidgetImage();
 	mInvenWidget->UpdateCurMoney();
+	mInvenWidget->SetWeaponText(TEXT(""), 0, 0);
 }
 
 void APlayerCharacterController::closeWidget(UUserWidget* closeWidget)
